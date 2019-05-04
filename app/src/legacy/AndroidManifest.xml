@@ -64,6 +64,8 @@
         <service
             android:name="notification.ANotificationsWhitelistService">
         </service>
+        <service android:name="notification.ANotificationsToggleService">
+        </service>
         <service
             android:name="core.QuickSettingsService"
             android:label="@string/main_quicksettings_toggle"

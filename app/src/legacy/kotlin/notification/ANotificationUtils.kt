@@ -5,15 +5,14 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
+import android.widget.Toast
 import com.github.salomonbrys.kodein.instance
-import core.Dns
-import core.MainActivity
-import core.Product
-import core.printServers
+import core.*
 import gs.environment.inject
 import gs.property.I18n
 import org.blokada.R
@@ -80,9 +79,21 @@ fun createNotificationKeepAlive(ctx: Context, count: Int, last: String): Notific
     } else {
         b.setContentTitle(ctx.resources.getString(R.string.notification_keepalive_title, count))
         b.setContentText(ctx.getString(R.string.notification_keepalive_content, last))
+        val t: Tunnel = ctx.inject().instance()
+        var domainList = ""
+        t.tunnelRecentDropped().asReversed().forEach { s -> domainList += s + '\n'}
+        b.setStyle(NotificationCompat.BigTextStyle().bigText(domainList))
+        val intent = Intent(ctx, ANotificationsToggleService::class.java)
+        intent.putExtra("new_state",!t.enabled())
+        val pendingIntent = PendingIntent.getService(ctx, 0, intent, 0)
+        if(t.enabled()) {
+            b.setSmallIcon(R.drawable.ic_stat_blokada)
+            b.addAction(R.drawable.ic_power, "Deactivate", pendingIntent)
+        }else{
+            b.setSmallIcon(R.drawable.ic_shield_outline)
+            b.addAction(R.drawable.ic_power, "Activate", pendingIntent)
+        }
     }
-
-    b.setSmallIcon(R.drawable.ic_stat_blokada)
     b.setPriority(NotificationCompat.PRIORITY_MIN)
     b.setOngoing(true)
 
@@ -135,3 +146,9 @@ fun displayNotificationForUpdate(ctx: Context, versionName: String) {
     notif.notify(2, b.build())
 }
 
+
+class DisplayToastRunnable(private val mContext: Context, private var mText: String) : Runnable {
+    override fun run() {
+        Toast.makeText(mContext, mText, Toast.LENGTH_SHORT).show()
+    }
+}

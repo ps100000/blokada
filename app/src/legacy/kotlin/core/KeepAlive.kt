@@ -130,7 +130,7 @@ class KeepAliveService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         j.log("KeepAliveService: start command")
-        return Service.START_STICKY;
+        return Service.START_STICKY
     }
 
     private var binder: KeepAliveBinder? = null
