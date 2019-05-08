@@ -1,9 +1,13 @@
 package flavor
 
+import adblocker.ListWidgetProvider
 import adblocker.SocialShareCount
 import adblocker.TunnelDashCountDropped
 import adblocker.TunnelDashHostsCount
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import com.github.salomonbrys.kodein.*
 import core.*
 import filter.DashFilterBlacklist
@@ -59,6 +63,14 @@ fun newFlavorModule(ctx: Context): Kodein.Module {
                 else if (ui.notifications()) displayNotification(ctx, s.tunnelRecentDropped().last())
             }
 
+            s.tunnelRecentDropped.doWhenChanged().then{
+                updateListWidget(ctx)
+            }
+            s.enabled.doWhenChanged().then{
+                updateListWidget(ctx)
+            }
+            updateListWidget(ctx)
+
             // Hide notification when disabled
             ui.notifications.doOnUiWhenSet().then {
                 hideNotification(ctx)
@@ -67,6 +79,16 @@ fun newFlavorModule(ctx: Context): Kodein.Module {
             // Initialize default values for properties that need it (async)
             s.tunnelDropCount {}
         }
+
+
     }
 }
 
+fun updateListWidget(ctx: Context){
+    val updateIntent = Intent(ctx.applicationContext, ListWidgetProvider::class.java)
+    updateIntent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+    val widgetManager = AppWidgetManager.getInstance(ctx)
+    val ids = widgetManager.getAppWidgetIds(ComponentName(ctx, ListWidgetProvider::class.java))
+    updateIntent .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+    ctx.sendBroadcast(updateIntent)
+}
