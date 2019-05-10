@@ -46,4 +46,3 @@ class ListWidgetProvider : AppWidgetProvider() {
         appWidgetManager?.updateAppWidget(appWidgetIds, remoteViews)
     }
 }
-/**/

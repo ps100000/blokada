@@ -112,10 +112,10 @@ fun createNotificationKeepAlive(ctx: Context, count: Int, last: String): Notific
         collapsedView.setTextViewText(R.id.keep_alive_title, ctx.resources.getString(R.string.notification_keepalive_title, count))
         collapsedView.setTextViewText(R.id.keep_alive_text, ctx.getString(R.string.notification_keepalive_content, last))
         collapsedView.setTextViewText(R.id.keep_alive_timestamp, DateUtils.formatDateTime(ctx, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME))
-        b.setSmallIcon(R.drawable.ic_stat_blokada)
         b.setCustomContentView(collapsedView)
         b.setCustomBigContentView(expandedView)
     }
+    b.setSmallIcon(R.drawable.ic_stat_blokada)
     b.setPriority(NotificationCompat.PRIORITY_MIN)
     b.setOngoing(true)
 
