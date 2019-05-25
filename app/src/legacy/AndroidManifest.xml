@@ -108,6 +108,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_update" />
         </provider>
+
+
+        <service android:name="adblocker.RequestLogger" />
     </application>
 
 </manifest>

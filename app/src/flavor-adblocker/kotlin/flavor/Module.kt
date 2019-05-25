@@ -1,9 +1,8 @@
 package flavor
 
-import adblocker.SocialShareCount
-import adblocker.TunnelDashCountDropped
-import adblocker.TunnelDashHostsCount
+import adblocker.*
 import android.content.Context
+import android.content.Intent
 import com.github.salomonbrys.kodein.*
 import core.*
 import filter.DashFilterBlacklist
@@ -37,13 +36,13 @@ fun newFlavorModule(ctx: Context): Kodein.Module {
                     AboutDash(ctx).activate(false),
                     CreditsDash(lazy).activate(false),
                     CtaDash(lazy).activate(false),
-                    ShareLogDash(lazy).activate(false)
+                    ShareLogDash(lazy).activate(false),
+                    LoggerDash(ctx).activate(true)
             )
         }
         onReady {
             val s: Tunnel = instance()
             val ui: UiState = instance()
-
             // Show confirmation message to the user whenever notifications are enabled or disabled
             ui.notifications.doWhenChanged().then {
                 if (ui.notifications()) {
@@ -63,6 +62,11 @@ fun newFlavorModule(ctx: Context): Kodein.Module {
             ui.notifications.doOnUiWhenSet().then {
                 hideNotification(ctx)
             }
+
+            val serviceIntent = Intent(ctx.applicationContext,
+                    RequestLogger::class.java)
+            serviceIntent.putExtra("load_on_start", true)
+            ctx.startService(serviceIntent)
 
             // Initialize default values for properties that need it (async)
             s.tunnelDropCount {}
