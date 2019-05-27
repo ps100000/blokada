@@ -15,11 +15,11 @@
 
         <ImageView
             android:id="@+id/widget_list_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:paddingLeft="4dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="1dp"
+            android:paddingRight="4dp"
+            android:paddingBottom="2dp"
             android:src="@drawable/ic_stat_blokada" />
 
     </RelativeLayout>
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="4dp"
         android:layout_toRightOf="@+id/icon_container"
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -65,7 +65,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:paddingTop="8dp"
-        android:paddingRight="3.5dp" />
+        android:paddingRight="4dp" />
 
     <Button
         android:id="@+id/widget_list_button"
