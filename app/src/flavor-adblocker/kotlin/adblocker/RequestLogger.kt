@@ -52,7 +52,7 @@ class LoggerDash(
 ) : Dash(
         "logger_settings",
         icon = R.drawable.ic_tune,
-        text = "Logger settings",
+        text = ctx.getString(R.string.logger_dash_title),
         hasView = true
 ) {
     private val config: LoggerConfigPersistence = LoggerConfigPersistence()

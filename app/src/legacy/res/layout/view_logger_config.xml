@@ -11,13 +11,6 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <!-- Status -->
-
-        <!-- Refetch filters -->
-
-        <!-- Refetch frequency -->
-
-        <!-- Wifi only -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -169,8 +162,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <!-- Start on Boot -->
 
     </LinearLayout>
 
